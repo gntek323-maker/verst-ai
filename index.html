@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Verst AI — Responsible AI for sensitive &amp; government data</title>
+<meta name="description" content="Verst AI builds responsible-AI tooling for regulated and government data: PII redaction, governed data access for AI agents, and grounded retrieval with audit trails and human-in-the-loop review."/>
+<style>
+  :root{
+    --navy:#0a2540; --navy2:#123a63; --accent:#4f7cff; --accent2:#7a5cff; --cyan:#22d3ee;
+    --green:#16a34a; --ink:#0e1626; --soft:#5b6577; --line:#e6eaf2; --bg:#f6f8fc; --panel:#fff;
+    --s1:8px;--s2:16px;--s3:24px;--s4:32px;--s5:48px;--s6:72px;--r:16px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;font-family:'Segoe UI',system-ui,-apple-system,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);font-size:17px;line-height:1.6;}
+  a{color:var(--accent);text-decoration:none;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 var(--s3);}
+
+  /* nav */
+  .nav{position:sticky;top:0;z-index:30;background:#081d33ee;backdrop-filter:blur(8px);border-bottom:1px solid #ffffff14;}
+  .nav .inner{max-width:1120px;margin:0 auto;padding:0 var(--s3);height:64px;display:flex;align-items:center;gap:12px;}
+  .mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:18px;}
+  .brand{color:#fff;font-weight:800;font-size:18px;letter-spacing:.2px;}
+  .nav .links{margin-left:auto;display:flex;gap:4px;}
+  .nav a{color:#aebfd6;font-weight:600;font-size:14.5px;padding:9px 14px;border-radius:9px;}
+  .nav a:hover{color:#fff;background:#ffffff14;}
+  .nav a.cta{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;}
+
+  /* hero */
+  .hero{position:relative;overflow:hidden;color:#fff;background:linear-gradient(120deg,#0a2540,#123a63 55%,#1b3a7a);}
+  .hero::before{content:"";position:absolute;inset:0;opacity:.55;background:radial-gradient(700px 340px at 12% -10%,#4f7cff55,transparent 60%),radial-gradient(600px 300px at 95% 0%,#22d3ee44,transparent 60%);}
+  .hero .inner{position:relative;padding:var(--s6) var(--s3);text-align:center;max-width:900px;margin:0 auto;}
+  .kicker{display:inline-block;font-size:12.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;background:#ffffff14;border:1px solid #ffffff22;padding:7px 14px;border-radius:999px;color:#cfe0ff;margin-bottom:var(--s3);}
+  .hero h1{font-size:48px;line-height:1.1;font-weight:850;margin:0 0 var(--s3);}
+  .hero h1 .grad{background:linear-gradient(90deg,#7cc5ff,#22d3ee);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .hero p{font-size:20px;color:#c6d4e8;max-width:720px;margin:0 auto var(--s4);}
+  .btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+  .btn{display:inline-block;font-weight:700;font-size:16px;padding:14px 26px;border-radius:12px;}
+  .btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 10px 26px #4f7cff55;}
+  .btn.ghost{background:#ffffff12;border:1px solid #ffffff30;color:#fff;}
+  @media(max-width:620px){.hero h1{font-size:34px;}.hero p{font-size:17px;}}
+
+  /* sections */
+  section.band{padding:var(--s6) 0;}
+  .eyebrow{text-align:center;font-size:12.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0 0 10px;}
+  h2.title{text-align:center;font-size:34px;font-weight:800;margin:0 0 var(--s2);color:var(--navy);}
+  .sub{text-align:center;font-size:18px;color:var(--soft);max-width:720px;margin:0 auto var(--s5);}
+
+  .grid{display:grid;gap:var(--s3);}
+  .g3{grid-template-columns:repeat(3,1fr);} .g2{grid-template-columns:1fr 1fr;}
+  @media(max-width:860px){.g3,.g2{grid-template-columns:1fr;}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:var(--s4);box-shadow:0 10px 30px #10182710;transition:transform .15s,box-shadow .2s;}
+  .card:hover{transform:translateY(-3px);box-shadow:0 16px 40px #10182718;}
+  .card .ic{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#eaf0ff,#efeaff);display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:var(--s2);}
+  .card h3{margin:0 0 8px;font-size:20px;color:var(--navy);}
+  .card p{margin:0;color:var(--soft);font-size:15.5px;}
+  .tagrow{margin-top:14px;}
+  .tag{display:inline-block;font-size:12.5px;font-weight:650;background:#eef3fb;color:var(--navy);padding:4px 11px;border-radius:999px;margin:3px 4px 0 0;}
+  .tag.ok{background:#e7f8ee;color:var(--green);}
+
+  .how{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s3);counter-reset:s;}
+  @media(max-width:860px){.steps{grid-template-columns:1fr 1fr;}}
+  @media(max-width:520px){.steps{grid-template-columns:1fr;}}
+  .step{position:relative;padding:var(--s3);border:1px solid var(--line);border-radius:var(--r);background:var(--bg);}
+  .step .n{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;margin-bottom:10px;}
+  .step h4{margin:0 0 6px;font-size:16px;color:var(--navy);} .step p{margin:0;font-size:14px;color:var(--soft);}
+
+  .principles{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;max-width:860px;margin:0 auto;}
+  @media(max-width:620px){.principles{grid-template-columns:1fr;}}
+  .pr{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;}
+  .pr .c{color:var(--green);font-weight:900;font-size:18px;flex:0 0 auto;}
+  .pr b{color:var(--navy);} .pr span{color:var(--soft);font-size:14.5px;}
+
+  /* CTA */
+  .cta-band{background:linear-gradient(120deg,#0a2540,#1b3a7a);color:#fff;text-align:center;}
+  .cta-band h2{color:#fff;font-size:32px;margin:0 0 10px;}
+  .cta-band p{color:#c6d4e8;font-size:18px;margin:0 0 var(--s4);}
+
+  footer{background:#081d33;color:#9fb3cc;font-size:14px;}
+  footer .inner{max-width:1120px;margin:0 auto;padding:var(--s4) var(--s3);display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;}
+  footer a{color:#cfe0ff;}
+  .note{max-width:1120px;margin:0 auto;padding:0 var(--s3) var(--s5);}
+  .note .box{background:#fffdf6;border:1px solid #f1d59a;border-radius:12px;padding:16px 18px;color:#6b531a;font-size:14px;}
+</style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="inner">
+      <div class="mark">&#128274;</div>
+      <span class="brand">Verst&nbsp;AI</span>
+      <div class="links">
+        <a href="#products">Products</a>
+        <a href="#how">How it works</a>
+        <a href="#principles">Principles</a>
+        <a href="#contact" class="cta">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="inner">
+      <span class="kicker">Responsible AI for sensitive &amp; government data</span>
+      <h1>Apply AI to sensitive data &mdash; <span class="grad">safely.</span></h1>
+      <p>Verst AI builds the governed layer between AI and the data it isn&rsquo;t allowed to mishandle:
+         automatic PII redaction, controlled data access for AI agents, and answers grounded in cited
+         sources &mdash; with audit trails and a human in the loop.</p>
+      <div class="btns">
+        <a href="#products" class="btn primary">Explore the tools</a>
+        <a href="#contact" class="btn ghost">Get in touch</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Products -->
+  <section class="band" id="products">
+    <div class="wrap">
+      <p class="eyebrow">What we build</p>
+      <h2 class="title">Three building blocks for trustworthy AI</h2>
+      <p class="sub">Each solves a specific barrier to using AI on regulated information. Built as
+        working prototypes on synthetic data.</p>
+      <div class="grid g3">
+        <div class="card">
+          <div class="ic">&#128272;</div>
+          <h3>PII Redaction</h3>
+          <p>Detects and removes SSNs, employer IDs, bank and card numbers, emails and phones from text &mdash;
+             with checksum validation, confidence scoring, and an audit trail that never stores the raw values.</p>
+          <div class="tagrow"><span class="tag ok">High-impact use case</span><span class="tag">Human-in-the-loop</span><span class="tag">Audit logging</span></div>
+        </div>
+        <div class="card">
+          <div class="ic">&#129302;</div>
+          <h3>Governed Agent Access (MCP)</h3>
+          <p>An MCP server that gives AI agents safe, structured access to datasets &mdash; goal-oriented tools,
+             validated inputs, and a controlled gateway where access and audit live.</p>
+          <div class="tagrow"><span class="tag">Model Context Protocol</span><span class="tag">Validated inputs</span><span class="tag">Agent-ready</span></div>
+        </div>
+        <div class="card">
+          <div class="ic">&#128218;</div>
+          <h3>Grounded Assistant (RAG)</h3>
+          <p>Answers questions from your documents with <b>citations</b>, so nothing is hallucinated and every
+             fact can be verified &mdash; with a local-model fallback for air-gapped environments.</p>
+          <div class="tagrow"><span class="tag">Cited sources</span><span class="tag">Privacy-first</span><span class="tag">Local fallback</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="band how" id="how">
+    <div class="wrap">
+      <p class="eyebrow">How it works</p>
+      <h2 class="title">A clean, governed layer in front of your data</h2>
+      <p class="sub">Systems integrate over simple REST APIs. The AI component is isolated so it can be
+        swapped &mdash; including for a FedRAMP-authorized model.</p>
+      <div class="steps">
+        <div class="step"><div class="n">1</div><h4>Ingest</h4><p>A document or request enters through a validated API.</p></div>
+        <div class="step"><div class="n">2</div><h4>Process with AI</h4><p>Redact, retrieve, or answer &mdash; with confidence scoring.</p></div>
+        <div class="step"><div class="n">3</div><h4>Review &amp; audit</h4><p>Low-confidence cases go to a human; every action is logged.</p></div>
+        <div class="step"><div class="n">4</div><h4>Deliver safely</h4><p>Only the safe result is stored, shared, or returned.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Principles -->
+  <section class="band" id="principles">
+    <div class="wrap">
+      <p class="eyebrow">How we think</p>
+      <h2 class="title">Built for trust, not just demos</h2>
+      <p class="sub">The same engineering philosophy runs through every tool.</p>
+      <div class="principles">
+        <div class="pr"><span class="c">&#10003;</span><span><b>Validated &amp; explainable.</b> Rules and checksums over black boxes, so every decision can be explained to an auditor.</span></div>
+        <div class="pr"><span class="c">&#10003;</span><span><b>Human-in-the-loop.</b> AI assists; a person decides on anything uncertain.</span></div>
+        <div class="pr"><span class="c">&#10003;</span><span><b>Audit by default.</b> Every action is logged &mdash; without the logs becoming a new place data leaks.</span></div>
+        <div class="pr"><span class="c">&#10003;</span><span><b>Swappable &amp; compliance-ready.</b> The AI layer is isolated so it can move to a FedRAMP-authorized model.</span></div>
+        <div class="pr"><span class="c">&#10003;</span><span><b>Fail safe, not open.</b> If AI can&rsquo;t confirm a safe result, the request is rejected &mdash; never silently stored.</span></div>
+        <div class="pr"><span class="c">&#10003;</span><span><b>Integration-first.</b> Clean REST interfaces so these drop into existing enterprise platforms.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / contact -->
+  <section class="band cta-band" id="contact">
+    <div class="wrap">
+      <h2>Let&rsquo;s talk</h2>
+      <p>Interested in responsible AI for regulated or government data? Reach out.</p>
+      <div class="btns" style="justify-content:center;">
+        <a href="mailto:girieverst@gmail.com" class="btn primary">Email us</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="note">
+    <div class="box">
+      <b>Note:</b> Verst AI is an early-stage venture. The products shown are working prototypes
+      built and evaluated on <b>synthetic data</b>; they are not affiliated with any government agency
+      and are not deployed in production. Metrics referenced are from internal prototype evaluations.
+    </div>
+  </div>
+
+  <footer>
+    <div class="inner">
+      <div>&copy; 2026 Verst AI &middot; Responsible AI for sensitive data</div>
+      <div><a href="mailto:girieverst@gmail.com">girieverst@gmail.com</a></div>
+    </div>
+  </footer>
+
+</body>
+</html>
